@@ -1,5 +1,5 @@
 import { useLoaderData, Link } from "react-router-dom";
-import { customFetch, formatPrice } from "../utils";
+import { customFetch, formatPrice, generateAmountOptions } from "../utils";
 import { useState } from "react";
 
 export const loader = async ({ params }) => {
@@ -11,8 +11,9 @@ const SingleProduct = () => {
   const { product } = useLoaderData();
   const { image, title, price, description, colors, company } = product.attributes;
   const dollarAmount = formatPrice(price)
-  const [productColor,setProductColor] = useState(colors[0])
-  
+  const [productColor, setProductColor] = useState(colors[0])
+  const [amount, setAmount] = useState(0)
+
   return (
     <section>
       <div className="text-md breadcrumbs">
@@ -35,7 +36,7 @@ const SingleProduct = () => {
                 <button
                   key={index}
                   type="button"
-                  className={`badge w-6 h-6 mr-2 border-2 ${color==productColor && 'border-2 border-secondary'}`}
+                  className={`badge w-6 h-6 mr-2 border-2 ${color == productColor && 'border-2 border-secondary'}`}
                   style={{ backgroundColor: color }}
                   onClick={() => setProductColor(color)}
                 ></button>
@@ -44,18 +45,14 @@ const SingleProduct = () => {
           </div>
           <div className="form-control w-full max-w-xs">
             <label className="label" htmlFor="amount">
-              <h4 className="text-md font-medium -tracking-wider capitalize">amount</h4>
+              <h4 className="text-md font-medium tracking-wider capitalize">amount</h4>
             </label>
-            <select className="select select-secondary select-bordered select-md" id="amount">
-              {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
+            <select className="select select-secondary select-bordered select-md" onChange={(e) => setAmount(e.target.value)} value={amount} id="amount">
+              {generateAmountOptions(20)}
             </select>
           </div>
           <div className="mt-10">
-            <button className="btn btn-secondary btn-md">Add to bag</button>
+            <button onChange={() => { console.log("Add to bag"); }} className="btn btn-secondary btn-md">Add to bag</button>
           </div>
         </div>
       </div>

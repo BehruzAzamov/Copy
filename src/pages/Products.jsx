@@ -1,17 +1,22 @@
-import React from "react";
+import Filter from "../components/Filter";
+import ProductsContainer from "../components/ProductsContainer";
+import { customFetch } from "../utils";
+
+const url = '/products'
+
+export const loader = async ({ request }) => {
+  const response = await customFetch(url)
+  const products = response.data.data
+  const meta = response.data.meta
+  console.log(products, meta);
+
+  return { products, meta }
+}
 
 const Products = () => {
-  return (
-    <div>
-      <h1>Products</h1>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui debitis
-        nam temporibus magni, nostrum officiis doloribus neque perferendis
-        inventore! Accusantium numquam sunt ullam reiciendis iusto architecto
-        praesentium doloribus at iure.
-      </p>
-    </div>
-  );
+  return <div>
+    <Filter />
+    <ProductsContainer /></div>
 };
 
 export default Products;
