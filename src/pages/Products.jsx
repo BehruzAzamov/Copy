@@ -14,7 +14,7 @@ export const loader = async ({ request }) => {
 }
 
 const Products = () => {
-  return <div>
+  return <div className="mt-14">
     <Filter />
     <ProductsContainer /></div>
 };
